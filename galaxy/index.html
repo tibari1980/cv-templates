@@ -3,130 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - {{personal.name}}</title>
+    <title>CV - {{personalInfo.name}}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif; 
-            background: #fafafa; 
-            padding: 0; 
-            line-height: 1.45; 
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+            background: radial-gradient(circle at top left, #030013, #000010 70%);
+            color: #eaeaea;
+            padding: 0;
+            line-height: 1.45;
         }
-        .cv-container { 
-            max-width: 210mm; 
-            height: 297mm; 
-            margin: 0 auto; 
-            background: white; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.05); 
-            display: grid; 
-            grid-template-columns: 1fr 2fr; 
-            overflow: hidden; 
+
+        .cv-container {
+            max-width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            background: rgba(10, 10, 25, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 40px rgba(100, 0, 255, 0.25);
+            border: 1px solid rgba(80, 0, 120, 0.3);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            overflow: hidden;
+            border-radius: 8px;
         }
-        .left-column { 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-            color: white; 
-            padding: 22px 18px; 
-            display: flex; 
-            flex-direction: column; 
+
+        /* --- COLONNE GAUCHE --- */
+        .left-column {
+            background: radial-gradient(circle at bottom right, #1b0033, #090014 80%);
+            color: #f1eaff;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
-        .profile-image { 
-            width: 80px; height: 80px; 
-            border-radius: 50%; 
-            margin: 0 auto 16px; 
-            display: block; 
-            border: 2px solid rgba(255,255,255,0.4); 
-            object-fit: cover; 
+        .left-column::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.15;
+        }
+
+        .profile-image {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: block;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(180, 100, 255, 0.5);
+            position: relative;
+            z-index: 1;
         }
         .profile-image[data-empty="true"] { display: none !important; }
-        .name-section { text-align: center; margin-bottom: 20px; }
-        .name-section h1 { 
-            font-size: 21px; font-weight: 700; 
-            margin-bottom: 4px; line-height: 1.15; 
+
+        .name-section { text-align: center; margin-bottom: 22px; position: relative; z-index: 1; }
+        .name-section h1 {
+            font-size: 22px; font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 6px rgba(180, 100, 255, 0.7);
         }
-        .name-section .job-title { 
-            font-size: 13px; opacity: 0.95; font-weight: 400; 
+        .name-section .job-title {
+            font-size: 13px; opacity: 0.9; font-weight: 400;
+            color: #c6aefc;
         }
-        .section { margin-bottom: 18px; }
-        .section-title { 
-            font-size: 11px; font-weight: 600; 
-            margin-bottom: 8px; 
-            color: rgba(255,255,255,0.98); 
-            text-transform: uppercase; 
-            letter-spacing: 0.8px; 
+
+        .section { margin-bottom: 20px; position: relative; z-index: 1; }
+        .section-title {
+            font-size: 11px; font-weight: 600;
+            margin-bottom: 8px;
+            color: #d3b9ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(150, 120, 255, 0.4);
+            padding-bottom: 4px;
         }
-        .contact-item { 
-            display: flex; align-items: center; 
-            margin-bottom: 7px; font-size: 12px; 
+
+        .contact-item {
+            display: flex; align-items: center;
+            margin-bottom: 7px; font-size: 12px;
+            color: #e1dbff;
         }
-        .contact-item::before { 
-            content: "→"; margin-right: 8px; 
-            font-size: 12px; flex-shrink: 0; 
+        .contact-item::before {
+            content: "⬡";
+            margin-right: 8px;
+            font-size: 10px;
+            color: #ad79ff;
         }
-        .skills-list, .interests-list, .languages-list { 
-            list-style: none; font-size: 12px; 
+
+        .skills-list, .interests-list, .languages-list {
+            list-style: none; font-size: 12px;
         }
-        .skills-list li, .interests-list li, .languages-list li { 
-            margin-bottom: 6px; padding-left: 16px; position: relative; 
+        .skills-list li, .interests-list li, .languages-list li {
+            margin-bottom: 6px; padding-left: 16px; position: relative;
+            color: #dfd6ff;
         }
-        .skills-list li::before, .interests-list li::before, .languages-list li::before { 
-            content: "•"; position: absolute; left: 0; 
-            font-size: 14px; color: rgba(255,255,255,0.75); 
+        .skills-list li::before, .interests-list li::before, .languages-list li::before {
+            content: "✦"; position: absolute; left: 0;
+            font-size: 11px; color: #a55cff;
         }
+
         .left-column-content { flex: 1; }
-        .right-column { padding: 24px 22px; }
-        .right-section { margin-bottom: 18px; }
-        .right-section-title { 
-            font-size: 15px; font-weight: 700; 
-            margin-bottom: 10px; color: #1a1a1a; 
-            position: relative; padding-bottom: 4px; 
+
+        /* --- COLONNE DROITE --- */
+        .right-column {
+            padding: 28px 26px;
+            background: linear-gradient(135deg, #0a0019 0%, #070010 100%);
+            color: #eae6ff;
+            position: relative;
         }
-        .right-section-title::after { 
-            content: ''; position: absolute; bottom: 0; left: 0; 
-            width: 26px; height: 2px; 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-            border-radius: 1px; 
+        .right-column::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(150, 0, 255, 0.15), transparent 60%);
+            pointer-events: none;
         }
-        .profile-text { font-size: 12px; color: #4a5568; }
-        .timeline-item { 
-            margin-bottom: 16px; padding-left: 16px; position: relative; 
+
+        .right-section {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
-        .timeline-item::before { 
-            content: ""; position: absolute; left: 7px; top: 0; 
-            width: 1px; height: 100%; 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+        .right-section-title {
+            font-size: 15px; font-weight: 700;
+            margin-bottom: 10px; color: #f9f8ff;
+            position: relative; padding-bottom: 6px;
         }
-        .timeline-item::after { 
-            content: ""; position: absolute; left: 4px; top: 0; 
-            width: 8px; height: 8px; border-radius: 50%; 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+        .right-section-title::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0;
+            width: 36px; height: 2px;
+            background: linear-gradient(90deg, #a968ff, #00d5ff);
+            border-radius: 2px;
         }
+
+        .profile-text {
+            font-size: 12px;
+            color: #c5bbff;
+            line-height: 1.6;
+        }
+
+        .timeline-item {
+            margin-bottom: 18px;
+            padding-left: 16px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute; left: 7px; top: 0;
+            width: 1px; height: 100%;
+            background: linear-gradient(180deg, #a06bff, #00d5ff);
+        }
+        .timeline-item::after {
+            content: "";
+            position: absolute; left: 3px; top: 0;
+            width: 8px; height: 8px; border-radius: 50%;
+            background: linear-gradient(135deg, #a76bff, #00c8ff);
+            box-shadow: 0 0 6px rgba(150, 50, 255, 0.8);
+        }
+
         .timeline-header { margin-bottom: 5px; }
-        .company-name, .school-name { 
-            font-size: 13px; font-weight: 700; color: #1a1a1a; 
-            margin-bottom: 1px; line-height: 1.25; 
+        .company-name, .school-name {
+            font-size: 13px; font-weight: 700; color: #fff;
         }
-        .job-info, .degree-info { 
-            color: #4a5568; font-size: 11.5px; margin-bottom: 1px; 
+        .job-info, .degree-info {
+            color: #b7aaff; font-size: 11.5px;
         }
-        .date-range { color: #a0aec0; font-size: 11px; font-weight: 500; }
-        .tasks-list { list-style: none; margin-top: 6px; }
-        .tasks-list li { 
-            margin-bottom: 4px; padding-left: 14px; position: relative; 
-            color: #4a5568; font-size: 11px; line-height: 1.35; 
+        .date-range {
+            color: #8e7fff; font-size: 11px; font-weight: 500;
         }
-        .tasks-list li::before { 
-            content: "→"; position: absolute; left: 0; 
-            color: #1a1a1a; font-size: 9px; font-weight: 600; 
+
+        .tasks-list {
+            list-style: none; margin-top: 6px;
         }
-        .timeline-item[data-empty="true"] { 
-            display: none !important; height: 0 !important; 
-            margin: 0 !important; padding: 0 !important; 
+        .tasks-list li {
+            margin-bottom: 4px;
+            padding-left: 14px;
+            position: relative;
+            color: #cabfff; font-size: 11px; line-height: 1.4;
         }
+        .tasks-list li::before {
+            content: "›"; position: absolute; left: 0;
+            color: #a26aff;
+        }
+
+        .section-empty { display: none !important; }
+
         @media print {
-            body { padding: 0; background: white; }
-            .cv-container { 
-                box-shadow: none; max-width: 100%; 
-                height: 297mm !important; border-radius: 0; 
+            body { padding: 0; background: white; color: black; }
+            .cv-container {
+                box-shadow: none; border: none;
+                max-width: 100%; height: 297mm !important;
             }
             .left-column { height: 297mm; }
         }
@@ -137,23 +206,34 @@
     <div class="cv-container">
         <!-- COLONNE GAUCHE -->
         <div class="left-column">
-            {{#if personal.photoUrl}}
-            <img src="{{personal.photoUrl}}" alt="Photo" class="profile-image">
+            {{#if personalInfo.photoUrl}}
+            <img src="{{personalInfo.photoUrl}}" alt="Photo" class="profile-image">
             {{/if}}
-            
+
             <div class="name-section">
-                <h1>{{personal.prenom}} {{personal.nom}}</h1>
-                <p class="job-title">{{personal.jobTitle}}</p>
+                <h1>{{personalInfo.name}}</h1>
+                {{#if personalInfo.jobTitle}}
+                <p class="job-title">{{personalInfo.jobTitle}}</p>
+                {{/if}}
             </div>
-            
+
             <div class="left-column-content">
+                <!-- CONTACT -->
                 <div class="section">
                     <h2 class="section-title">Contact</h2>
-                    <div class="contact-item">{{personal.telephone}}</div>
-                    <div class="contact-item">{{personal.email}}</div>
-                    <div class="contact-item">{{personal.localisation}}</div>
+                    {{#if personalInfo.phone}}
+                    <div class="contact-item">{{personalInfo.phone}}</div>
+                    {{/if}}
+                    {{#if personalInfo.email}}
+                    <div class="contact-item">{{personalInfo.email}}</div>
+                    {{/if}}
+                    {{#if personalInfo.location}}
+                    <div class="contact-item">{{personalInfo.location}}</div>
+                    {{/if}}
                 </div>
 
+                <!-- COMPÉTENCES -->
+                {{#if skills.length}}
                 <div class="section">
                     <h2 class="section-title">Compétences</h2>
                     <ul class="skills-list">
@@ -162,16 +242,22 @@
                         {{/each}}
                     </ul>
                 </div>
+                {{/if}}
 
+                <!-- LANGUES -->
+                {{#if languages.length}}
                 <div class="section">
                     <h2 class="section-title">Langues</h2>
                     <ul class="languages-list">
                         {{#each languages}}
-                        <li>{{language}} - {{level}}</li>
+                        <li>{{this.language}} - {{this.level}}</li>
                         {{/each}}
                     </ul>
                 </div>
+                {{/if}}
 
+                <!-- CENTRES D'INTÉRÊT -->
+                {{#if interests.length}}
                 <div class="section">
                     <h2 class="section-title">Centre d'intérêt</h2>
                     <ul class="interests-list">
@@ -180,46 +266,62 @@
                         {{/each}}
                     </ul>
                 </div>
+                {{/if}}
             </div>
         </div>
 
         <!-- COLONNE DROITE -->
         <div class="right-column">
+            <!-- PROFIL / RÉSUMÉ -->
+            {{#if summary}}
             <div class="right-section">
                 <h2 class="right-section-title">Profil</h2>
                 <p class="profile-text">{{summary}}</p>
             </div>
+            {{/if}}
 
+            <!-- EXPÉRIENCE PROFESSIONNELLE -->
+            {{#if experience.length}}
             <div class="right-section">
                 <h2 class="right-section-title">Expérience Professionnelle</h2>
-                {{#each experiences}}
+                {{#each experience}}
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <h3 class="company-name">{{company}}</h3>
-                        <p class="job-info">{{title}}, {{city}}</p>
-                        <p class="date-range">{{dates}}</p>
+                        <h3 class="company-name">{{this.company}}</h3>
+                        <p class="job-info">{{this.title}}{{#if this.city}}, {{this.city}}{{/if}}</p>
+                        {{#if this.dates}}
+                        <p class="date-range">{{this.dates}}</p>
+                        {{/if}}
                     </div>
+                    {{#if this.bullets.length}}
                     <ul class="tasks-list">
-                        {{#each bullets}}
+                        {{#each this.bullets}}
                         <li>{{this}}</li>
                         {{/each}}
                     </ul>
+                    {{/if}}
                 </div>
                 {{/each}}
             </div>
+            {{/if}}
 
+            <!-- FORMATION -->
+            {{#if education.length}}
             <div class="right-section">
                 <h2 class="right-section-title">Formation</h2>
                 {{#each education}}
                 <div class="timeline-item">
                     <div class="timeline-header">
-                        <h3 class="school-name">{{degree}}</h3>
-                        <p class="degree-info">{{school}}</p>
-                        <p class="date-range">{{dates}}</p>
+                        <h3 class="school-name">{{this.degree}}</h3>
+                        <p class="degree-info">{{this.school}}{{#if this.city}}, {{this.city}}{{/if}}</p>
+                        {{#if this.dates}}
+                        <p class="date-range">{{this.dates}}</p>
+                        {{/if}}
                     </div>
                 </div>
                 {{/each}}
             </div>
+            {{/if}}
         </div>
     </div>
 </body>
