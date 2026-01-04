@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{personalInfo.name}}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2d3748;
+            padding: 0;
+            line-height: 1.65;
+            font-size: 14px;
+        }
+
+        .cv-container {
+            max-width: 210mm;
+            height: 297mm;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        /* HEADER Violet élégant */
+        .header {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+            padding: 45px 40px 35px;
+            text-align: center;
+            position: relative;
+            color: white;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15), transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(255,255,255,0.1), transparent 50%);
+            pointer-events: none;
+        }
+
+        .profile-image {
+            width: 120px; height: 120px;
+            border-radius: 28px;
+            margin: 0 auto 28px;
+            display: block;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            object-fit: cover;
+            box-shadow: 0 15px 45px rgba(139, 92, 246, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+        .profile-image[data-empty="true"] { display: none !important; }
+
+        .name-title {
+            position: relative;
+            z-index: 2;
+        }
+        .name-title h1 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        .job-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.97);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 12px 28px;
+            border-radius: 30px;
+            display: inline-block;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* CONTACT - Icons spécifiques */
+        .contact-section {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            padding: 24px 40px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        .contact-item {
+            font-size: 15px;
+            color: #4b5563;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 20px;
+            background: rgba(139, 92, 246, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-item::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+        .contact-item:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .contact-item:hover {
+            background: rgba(139, 92, 246, 0.25);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.3);
+        }
+        .contact-phone::before { content: "📱"; font-size: 20px; }
+        .contact-email::before { content: "📧"; font-size: 20px; }
+        .contact-location::before { content: "📍"; font-size: 20px; }
+
+        /* CONTENU PRINCIPAL */
+        .main-content {
+            padding: 44px 40px 40px;
+        }
+        .section {
+            margin-bottom: 36px;
+        }
+        .section:last-child { margin-bottom: 0; }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            position: relative;
+            letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, #8b5cf6, #ec4899);
+            border-radius: 2px;
+        }
+        .section-title .icon {
+            font-size: 24px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(139, 92, 246, 0.3));
+        }
+
+        /* PROFIL */
+        .profile-text {
+            font-size: 15px;
+            color: #334155;
+            line-height: 1.75;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(248, 250, 252, 0.9));
+            padding: 30px;
+            border-radius: 24px;
+            border-left: 6px solid linear-gradient(135deg, #8b5cf6, #ec4899);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        .profile-text::before {
+            content: "💫";
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 28px;
+            opacity: 0.25;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        .timeline-item {
+            padding-left: 36px;
+            position: relative;
+            margin-bottom: 0;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 16px;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #8b5cf6, #ec4899);
+            border-radius: 2px;
+        }
+        .timeline-item::after {
+            content: "✨";
+            position: absolute;
+            left: 9px;
+            top: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.9), 0 6px 20px rgba(139, 92, 246, 0.4);
+            z-index: 2;
+        }
+
+        .timeline-header { margin-bottom: 12px; }
+        .company-name, .school-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .company-name::before { content: "🏛️"; font-size: 18px; }
+        .school-name::before { content: "🏫"; font-size: 18px; }
+        
+        .job-info, .degree-info {
+            font-size: 15px;
+            color: #475569;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .job-info::before { content: "💼"; font-size: 15px; }
+        .degree-info::before { content: "📜"; font-size: 15px; }
+        
+        .date-range {
+            font-size: 14px;
+            color: #8b5cf6;
+            font-weight: 600;
+            margin-bottom: 18px;
+            background: rgba(139, 92, 246, 0.15);
+            padding: 8px 20px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .date-range::before { content: "📊"; font-size: 16px; }
+
+        /* COMPÉTENCES & LISTES */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+        .skill-item, .interest-item, .language-item {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 18px 22px;
+            border-radius: 20px;
+            font-size: 15px;
+            color: #334155;
+            font-weight: 500;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        .skill-item::before, .interest-item::before, .language-item::before {
+            content: "🔥";
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            font-size: 16px;
+            opacity: 0.3;
+        }
+        .skill-item:hover, .interest-item:hover, .language-item:hover {
+            border-color: #8b5cf6;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(139, 92, 246, 0.25);
+        }
+
+        .tasks-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .tasks-list li {
+            font-size: 15px;
+            color: #334155;
+            margin-bottom: 12px;
+            padding-left: 32px;
+            position: relative;
+            line-height: 1.65;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .tasks-list li::before {
+            content: "⭐";
+            position: absolute;
+            left: 0;
+            top: 4px;
+            color: #ec4899;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .section-empty { display: none !important; }
+
+        @media print {
+            body { background: white; }
+            .cv-container { 
+                box-shadow: none; border: 1px solid #ddd; 
+                margin: 0; border-radius: 0; background: white !important;
+            }
+            .header { background: #7c3aed !important; }
+            /* Masque tous les icons à l'impression */
+            [class*="::before"], .section-title .icon,
+            .profile-text::before, .timeline-item::after { display: none !important; }
+        }
+        @page { size: A4; margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- HEADER -->
+        <div class="header">
+            {{#if personalInfo.photoUrl}}
+            <img src="{{personalInfo.photoUrl}}" alt="Photo de {{personalInfo.name}}" class="profile-image">
+            {{else}}
+            <div class="profile-image" data-empty="true" style="display: none;"></div>
+            {{/if}}
+            
+            <div class="name-title">
+                <h1>{{personalInfo.name}}</h1>
+                {{#if personalInfo.jobTitle}}
+                <p class="job-title">{{personalInfo.jobTitle}}</p>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="contact-section">
+            {{#if personalInfo.phone}}
+            <div class="contact-item contact-phone">{{personalInfo.phone}}</div>
+            {{/if}}
+            {{#if personalInfo.email}}
+            <div class="contact-item contact-email">{{personalInfo.email}}</div>
+            {{/if}}
+            {{#if personalInfo.location}}
+            <div class="contact-item contact-location">{{personalInfo.location}}</div>
+            {{/if}}
+        </div>
+
+        <!-- CONTENU PRINCIPAL -->
+        <div class="main-content">
+            <!-- PROFIL -->
+            {{#if summary}}
+            <div class="section">
+                <h2 class="section-title"><span class="icon">👤</span>Profil</h2>
+                <p class="profile-text">{{summary}}</p>
+            </div>
+            {{/if}}
+
+            <!-- COMPÉTENCES -->
+            {{#if skills.length}}
+            <div class="section">
+                <h2 class="section-title"><span class="icon">⚡</span>Compétences</h2>
+                <div class="skills-grid">
+                    {{#each skills}}
+                    <div class="skill-item">{{this}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- EXPÉRIENCE -->
+            {{#if experience.length}}
+            <div class="section">
+                <h2 class="section-title"><span class="icon">💼</span>Expérience Professionnelle</h2>
+                <div class="timeline">
+                    {{#each experience}}
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <h3 class="company-name">{{this.company}}</h3>
+                            <p class="job-info">{{this.title}}{{#if this.city}}, {{this.city}}{{/if}}</p>
+                            {{#if this.dates}}
+                            <p class="date-range">{{this.dates}}</p>
+                            {{/if}}
+                        </div>
+                        {{#if this.bullets.length}}
+                        <ul class="tasks-list">
+                            {{#each this.bullets}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- FORMATION -->
+            {{#if education.length}}
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🎓</span>Formation</h2>
+                <div class="timeline">
+                    {{#each education}}
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <h3 class="school-name">{{this.degree}}</h3>
+                            <p class="degree-info">{{this.school}}{{#if this.city}}, {{this.city}}{{/if}}</p>
+                            {{#if this.dates}}
+                            <p class="date-range">{{this.dates}}</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- LANGUES -->
+            {{#if languages.length}}
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🌐</span>Langues</h2>
+                <div class="skills-grid">
+                    {{#each languages}}
+                    <div class="language-item">{{this.language}} - {{this.level}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- INTÉRÊTS -->
+            {{#if interests.length}}
+            <div class="section">
+                <h2 class="section-title"><span class="icon">🎯</span>Centre d'intérêt</h2>
+                <div class="skills-grid">
+                    {{#each interests}}
+                    <div class="interest-item">{{this}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</body>
+</html>
