@@ -108,22 +108,6 @@
             position: relative;
             overflow: hidden;
         }
-        .contact-item::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.4);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
-        }
-        .contact-item:hover::before {
-            width: 300px;
-            height: 300px;
-        }
         .contact-item:hover {
             background: rgba(139, 92, 246, 0.25);
             transform: translateY(-3px) scale(1.02);
@@ -136,6 +120,8 @@
         /* CONTENU PRINCIPAL */
         .main-content {
             padding: 44px 40px 40px;
+            max-height: calc(297mm - 250px);
+            overflow-y: auto;
         }
         .section {
             margin-bottom: 36px;
@@ -180,7 +166,7 @@
             background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(248, 250, 252, 0.9));
             padding: 30px;
             border-radius: 24px;
-            border-left: 6px solid linear-gradient(135deg, #8b5cf6, #ec4899);
+            border-left: 6px solid #8b5cf6;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             position: relative;
             backdrop-filter: blur(10px);
@@ -354,8 +340,6 @@
         <div class="header">
             {{#if personalInfo.photoUrl}}
             <img src="{{personalInfo.photoUrl}}" alt="Photo de {{personalInfo.name}}" class="profile-image">
-            {{else}}
-            <div class="profile-image" data-empty="true" style="display: none;"></div>
             {{/if}}
             
             <div class="name-title">
@@ -398,6 +382,10 @@
                     <div class="skill-item">{{this}}</div>
                     {{/each}}
                 </div>
+            </div>
+            {{else}}
+            <div class="section section-empty" style="display: none;">
+                <h2 class="section-title"><span class="icon">⚡</span>Compétences</h2>
             </div>
             {{/if}}
 
@@ -458,17 +446,25 @@
                     {{/each}}
                 </div>
             </div>
+            {{else}}
+            <div class="section section-empty" style="display: none;">
+                <h2 class="section-title"><span class="icon">🌐</span>Langues</h2>
+            </div>
             {{/if}}
 
-            <!-- INTÉRÊTS -->
+            <!-- CENTRES D'INTÉRÊT -->
             {{#if interests.length}}
             <div class="section">
-                <h2 class="section-title"><span class="icon">🎯</span>Centre d'intérêt</h2>
+                <h2 class="section-title"><span class="icon">🎯</span>Centres d'intérêt</h2>
                 <div class="skills-grid">
                     {{#each interests}}
                     <div class="interest-item">{{this}}</div>
                     {{/each}}
                 </div>
+            </div>
+            {{else}}
+            <div class="section section-empty" style="display: none;">
+                <h2 class="section-title"><span class="icon">🎯</span>Centres d'intérêt</h2>
             </div>
             {{/if}}
         </div>
