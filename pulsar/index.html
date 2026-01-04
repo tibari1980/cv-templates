@@ -3,223 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - {{personal.name}}</title>
+    <title>CV - {{personalInfo.name}}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif; 
-            background: #fafafa; 
-            padding: 0; 
-            line-height: 1.45; 
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0c0e1a 0%, #1a1f3a 100%);
+            color: #e8ecf4;
+            padding: 0;
+            line-height: 1.55;
+            font-size: 13px;
         }
-        .cv-container { 
-            max-width: 210mm; 
-            height: 297mm; 
-            margin: 0 auto; 
-            background: white; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.05); 
-            display: grid; 
-            grid-template-columns: 1fr 2fr; 
-            overflow: hidden; 
+
+        .cv-container {
+            max-width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            background: rgba(12, 14, 26, 0.98);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(100, 120, 255, 0.2);
+            overflow: hidden;
+            border-radius: 12px;
+            position: relative;
         }
-        .left-column { 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-            color: white; 
-            padding: 22px 18px; 
-            display: flex; 
-            flex-direction: column; 
+
+        .cv-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(100, 120, 255, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(80, 200, 255, 0.08), transparent 50%);
+            pointer-events: none;
         }
-        .profile-image { 
-            width: 80px; height: 80px; 
-            border-radius: 50%; 
-            margin: 0 auto 16px; 
-            display: block; 
-            border: 2px solid rgba(255,255,255,0.4); 
-            object-fit: cover; 
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+            padding: 28px 32px 24px;
+            text-align: center;
+            position: relative;
+        }
+        .profile-image {
+            width: 100px; height: 100px;
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
         .profile-image[data-empty="true"] { display: none !important; }
-        .name-section { text-align: center; margin-bottom: 20px; }
-        .name-section h1 { 
-            font-size: 21px; font-weight: 700; 
-            margin-bottom: 4px; line-height: 1.15; 
+
+        .name-title {
+            margin-bottom: 8px;
         }
-        .name-section .job-title { 
-            font-size: 13px; opacity: 0.95; font-weight: 400; 
+        .name-title h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .section { margin-bottom: 18px; }
-        .section-title { 
-            font-size: 11px; font-weight: 600; 
-            margin-bottom: 8px; 
-            color: rgba(255,255,255,0.98); 
-            text-transform: uppercase; 
-            letter-spacing: 0.8px; 
+        .job-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #93c5fd;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
-        .contact-item { 
-            display: flex; align-items: center; 
-            margin-bottom: 7px; font-size: 12px; 
+
+        /* CONTACT */
+        .contact-section {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            padding: 12px 32px;
+            background: rgba(100, 120, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
-        .contact-item::before { 
-            content: "→"; margin-right: 8px; 
-            font-size: 12px; flex-shrink: 0; 
+        .contact-item {
+            font-size: 14px;
+            color: #c7d2fe;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .skills-list, .interests-list, .languages-list { 
-            list-style: none; font-size: 12px; 
+        .contact-item::before {
+            content: "⚡";
+            font-size: 12px;
         }
-        .skills-list li, .interests-list li, .languages-list li { 
-            margin-bottom: 6px; padding-left: 16px; position: relative; 
+
+        /* SECTIONS PRINCIPALES */
+        .main-content {
+            padding: 32px;
+            max-height: calc(297mm - 200px);
+            overflow-y: auto;
         }
-        .skills-list li::before, .interests-list li::before, .languages-list li::before { 
-            content: "•"; position: absolute; left: 0; 
-            font-size: 14px; color: rgba(255,255,255,0.75); 
+        .section {
+            margin-bottom: 28px;
         }
-        .left-column-content { flex: 1; }
-        .right-column { padding: 24px 22px; }
-        .right-section { margin-bottom: 18px; }
-        .right-section-title { 
-            font-size: 15px; font-weight: 700; 
-            margin-bottom: 10px; color: #1a1a1a; 
-            position: relative; padding-bottom: 4px; 
+        .section:last-child {
+            margin-bottom: 0;
         }
-        .right-section-title::after { 
-            content: ''; position: absolute; bottom: 0; left: 0; 
-            width: 26px; height: 2px; 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-            border-radius: 1px; 
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            position: relative;
+            letter-spacing: 0.5px;
         }
-        .profile-text { font-size: 12px; color: #4a5568; }
-        .timeline-item { 
-            margin-bottom: 16px; padding-left: 16px; position: relative; 
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, #6478ff, #50d4ff);
+            border-radius: 1px;
         }
-        .timeline-item::before { 
-            content: ""; position: absolute; left: 7px; top: 0; 
-            width: 1px; height: 100%; 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+
+        /* PROFIL */
+        .profile-text {
+            font-size: 14px;
+            color: #b8c6e8;
+            line-height: 1.65;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-left: 4px solid #6478ff;
+            border-radius: 6px;
         }
-        .timeline-item::after { 
-            content: ""; position: absolute; left: 4px; top: 0; 
-            width: 8px; height: 8px; border-radius: 50%; 
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+
+        /* TIMELINE */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
-        .timeline-header { margin-bottom: 5px; }
-        .company-name, .school-name { 
-            font-size: 13px; font-weight: 700; color: #1a1a1a; 
-            margin-bottom: 1px; line-height: 1.25; 
+        .timeline-item {
+            padding-left: 24px;
+            position: relative;
+            margin-bottom: 20px;
         }
-        .job-info, .degree-info { 
-            color: #4a5568; font-size: 11.5px; margin-bottom: 1px; 
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, #6478ff, #50d4ff);
         }
-        .date-range { color: #a0aec0; font-size: 11px; font-weight: 500; }
-        .tasks-list { list-style: none; margin-top: 6px; }
-        .tasks-list li { 
-            margin-bottom: 4px; padding-left: 14px; position: relative; 
-            color: #4a5568; font-size: 11px; line-height: 1.35; 
+        .timeline-item::after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6478ff, #50d4ff);
+            box-shadow: 0 0 0 4px rgba(100, 120, 255, 0.3);
         }
-        .tasks-list li::before { 
-            content: "→"; position: absolute; left: 0; 
-            color: #1a1a1a; font-size: 9px; font-weight: 600; 
+
+        .timeline-header {
+            margin-bottom: 8px;
         }
-        .timeline-item[data-empty="true"] { 
-            display: none !important; height: 0 !important; 
-            margin: 0 !important; padding: 0 !important; 
+        .company-name, .school-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
         }
+        .job-info, .degree-info {
+            font-size: 13px;
+            color: #a8b4d8;
+            margin-bottom: 4px;
+        }
+        .date-range {
+            font-size: 12px;
+            color: #7c8af2;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        /* LISTES */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .skill-item, .interest-item, .language-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #d1d9f5;
+            border: 1px solid rgba(100, 120, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .tasks-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+        .tasks-list li {
+            font-size: 13px;
+            color: #b8c6e8;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .tasks-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #6478ff;
+            font-weight: 700;
+        }
+
+        .section-empty { display: none !important; }
+
         @media print {
-            body { padding: 0; background: white; }
-            .cv-container { 
-                box-shadow: none; max-width: 100%; 
-                height: 297mm !important; border-radius: 0; 
-            }
-            .left-column { height: 297mm; }
+            body { background: white; color: black; font-size: 12px; }
+            .cv-container { box-shadow: none; border: none; }
+            .header { background: #f8f9fa !important; }
         }
         @page { size: A4; margin: 0; }
     </style>
 </head>
 <body>
     <div class="cv-container">
-        <!-- COLONNE GAUCHE -->
-        <div class="left-column">
-            {{#if personal.photoUrl}}
-            <img src="{{personal.photoUrl}}" alt="Photo" class="profile-image">
+        <!-- HEADER -->
+        <div class="header">
+            {{#if personalInfo.photoUrl}}
+            <img src="{{personalInfo.photoUrl}}" alt="Photo" class="profile-image">
             {{/if}}
             
-            <div class="name-section">
-                <h1>{{personal.prenom}} {{personal.nom}}</h1>
-                <p class="job-title">{{personal.jobTitle}}</p>
-            </div>
-            
-            <div class="left-column-content">
-                <div class="section">
-                    <h2 class="section-title">Contact</h2>
-                    <div class="contact-item">{{personal.telephone}}</div>
-                    <div class="contact-item">{{personal.email}}</div>
-                    <div class="contact-item">{{personal.localisation}}</div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Compétences</h2>
-                    <ul class="skills-list">
-                        {{#each skills}}
-                        <li>{{this}}</li>
-                        {{/each}}
-                    </ul>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Langues</h2>
-                    <ul class="languages-list">
-                        {{#each languages}}
-                        <li>{{language}} - {{level}}</li>
-                        {{/each}}
-                    </ul>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">Centre d'intérêt</h2>
-                    <ul class="interests-list">
-                        {{#each interests}}
-                        <li>{{this}}</li>
-                        {{/each}}
-                    </ul>
-                </div>
+            <div class="name-title">
+                <h1>{{personalInfo.name}}</h1>
+                {{#if personalInfo.jobTitle}}
+                <p class="job-title">{{personalInfo.jobTitle}}</p>
+                {{/if}}
             </div>
         </div>
 
-        <!-- COLONNE DROITE -->
-        <div class="right-column">
-            <div class="right-section">
-                <h2 class="right-section-title">Profil</h2>
+        <!-- CONTACT -->
+        <div class="contact-section">
+            {{#if personalInfo.phone}}
+            <div class="contact-item">{{personalInfo.phone}}</div>
+            {{/if}}
+            {{#if personalInfo.email}}
+            <div class="contact-item">{{personalInfo.email}}</div>
+            {{/if}}
+            {{#if personalInfo.location}}
+            <div class="contact-item">{{personalInfo.location}}</div>
+            {{/if}}
+        </div>
+
+        <!-- CONTENU PRINCIPAL -->
+        <div class="main-content">
+            <!-- PROFIL -->
+            {{#if summary}}
+            <div class="section">
+                <h2 class="section-title">Profil</h2>
                 <p class="profile-text">{{summary}}</p>
             </div>
+            {{/if}}
 
-            <div class="right-section">
-                <h2 class="right-section-title">Expérience Professionnelle</h2>
-                {{#each experiences}}
-                <div class="timeline-item">
-                    <div class="timeline-header">
-                        <h3 class="company-name">{{company}}</h3>
-                        <p class="job-info">{{title}}, {{city}}</p>
-                        <p class="date-range">{{dates}}</p>
-                    </div>
-                    <ul class="tasks-list">
-                        {{#each bullets}}
-                        <li>{{this}}</li>
-                        {{/each}}
-                    </ul>
+            <!-- COMPÉTENCES -->
+            {{#if skills.length}}
+            <div class="section">
+                <h2 class="section-title">Compétences</h2>
+                <div class="skills-grid">
+                    {{#each skills}}
+                    <div class="skill-item">{{this}}</div>
+                    {{/each}}
                 </div>
-                {{/each}}
             </div>
+            {{/if}}
 
-            <div class="right-section">
-                <h2 class="right-section-title">Formation</h2>
-                {{#each education}}
-                <div class="timeline-item">
-                    <div class="timeline-header">
-                        <h3 class="school-name">{{degree}}</h3>
-                        <p class="degree-info">{{school}}</p>
-                        <p class="date-range">{{dates}}</p>
+            <!-- EXPÉRIENCE -->
+            {{#if experience.length}}
+            <div class="section">
+                <h2 class="section-title">Expérience Professionnelle</h2>
+                <div class="timeline">
+                    {{#each experience}}
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <h3 class="company-name">{{this.company}}</h3>
+                            <p class="job-info">{{this.title}}{{#if this.city}}, {{this.city}}{{/if}}</p>
+                            {{#if this.dates}}
+                            <p class="date-range">{{this.dates}}</p>
+                            {{/if}}
+                        </div>
+                        {{#if this.bullets.length}}
+                        <ul class="tasks-list">
+                            {{#each this.bullets}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
                     </div>
+                    {{/each}}
                 </div>
-                {{/each}}
             </div>
+            {{/if}}
+
+            <!-- FORMATION -->
+            {{#if education.length}}
+            <div class="section">
+                <h2 class="section-title">Formation</h2>
+                <div class="timeline">
+                    {{#each education}}
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <h3 class="school-name">{{this.degree}}</h3>
+                            <p class="degree-info">{{this.school}}{{#if this.city}}, {{this.city}}{{/if}}</p>
+                            {{#if this.dates}}
+                            <p class="date-range">{{this.dates}}</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- LANGUES -->
+            {{#if languages.length}}
+            <div class="section">
+                <h2 class="section-title">Langues</h2>
+                <div class="skills-grid">
+                    {{#each languages}}
+                    <div class="language-item">{{this.language}} - {{this.level}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- INTÉRÊTS -->
+            {{#if interests.length}}
+            <div class="section">
+                <h2 class="section-title">Centre d'intérêt</h2>
+                <div class="skills-grid">
+                    {{#each interests}}
+                    <div class="interest-item">{{this}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/if}}
         </div>
     </div>
 </body>
