@@ -84,7 +84,7 @@
             backdrop-filter: blur(10px);
         }
 
-        /* CONTACT - Barre blanche moderne */
+        /* CONTACT - Icons stylés */
         .contact-section {
             display: flex;
             justify-content: center;
@@ -100,21 +100,36 @@
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 12px;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 16px;
             background: rgba(59, 130, 246, 0.1);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .contact-item:hover::before {
+            opacity: 1;
         }
         .contact-item:hover {
             background: rgba(59, 130, 246, 0.2);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
         }
-        .contact-item::before {
-            content: "✦";
-            font-size: 14px;
-            color: #3b82f6;
-        }
+        .contact-phone::before { content: "📱"; font-size: 18px; }
+        .contact-email::before { content: "✉️"; font-size: 18px; }
+        .contact-location::before { content: "📍"; font-size: 18px; }
 
         /* CONTENU PRINCIPAL */
         .main-content {
@@ -134,6 +149,9 @@
             padding-bottom: 10px;
             position: relative;
             letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         .section-title::after {
             content: "";
@@ -145,6 +163,13 @@
             background: linear-gradient(90deg, #3b82f6, #10b981);
             border-radius: 2px;
         }
+        .section-title .icon {
+            font-size: 22px;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
         /* PROFIL */
         .profile-text {
@@ -152,10 +177,20 @@
             color: #334155;
             line-height: 1.7;
             background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            padding: 24px;
-            border-radius: 16px;
-            border-left: 5px solid #3b82f6;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 28px;
+            border-radius: 20px;
+            border-left: 6px solid #3b82f6;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-text::before {
+            content: "✨";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            opacity: 0.3;
         }
 
         /* TIMELINE */
@@ -165,29 +200,35 @@
             gap: 28px;
         }
         .timeline-item {
-            padding-left: 28px;
+            padding-left: 32px;
             position: relative;
             margin-bottom: 0;
         }
         .timeline-item::before {
             content: "";
             position: absolute;
-            left: 12px;
+            left: 14px;
             top: 0;
-            width: 2px;
+            width: 3px;
             height: 100%;
             background: linear-gradient(180deg, #3b82f6, #10b981);
+            border-radius: 2px;
         }
         .timeline-item::after {
-            content: "";
+            content: "⚡";
             position: absolute;
             left: 8px;
-            top: 0;
-            width: 14px;
-            height: 14px;
+            top: 4px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: linear-gradient(135deg, #3b82f6, #10b981);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.8);
+            color: white;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.8), 0 4px 12px rgba(59, 130, 246, 0.3);
             z-index: 1;
         }
 
@@ -199,12 +240,21 @@
             font-weight: 700;
             color: #1e293b;
             margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        .company-name::before { content: "🏢"; font-size: 16px; }
+        .school-name::before { content: "🎓"; font-size: 16px; }
+        
         .job-info, .degree-info {
             font-size: 14px;
             color: #475569;
             font-weight: 500;
             margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .date-range {
             font-size: 13px;
@@ -212,10 +262,13 @@
             font-weight: 600;
             margin-bottom: 16px;
             background: rgba(59, 130, 246, 0.1);
-            padding: 4px 12px;
+            padding: 6px 16px;
             border-radius: 20px;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
+        .date-range::before { content: "📅"; font-size: 14px; }
 
         /* COMPÉTENCES & LISTES */
         .skills-grid {
@@ -226,19 +279,29 @@
         }
         .skill-item, .interest-item, .language-item {
             background: white;
-            padding: 14px 18px;
-            border-radius: 12px;
+            padding: 16px 20px;
+            border-radius: 16px;
             font-size: 14px;
             color: #334155;
             font-weight: 500;
             border: 2px solid rgba(59, 130, 246, 0.2);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .skill-item:hover {
+        .skill-item::before, .interest-item::before, .language-item::before {
+            content: "⭐";
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 14px;
+            opacity: 0.4;
+        }
+        .skill-item:hover, .interest-item:hover, .language-item:hover {
             border-color: #3b82f6;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
         }
 
         .tasks-list {
@@ -249,15 +312,19 @@
             font-size: 14px;
             color: #334155;
             margin-bottom: 10px;
-            padding-left: 24px;
+            padding-left: 28px;
             position: relative;
             line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
         }
         .tasks-list li::before {
-            content: "→";
+            content: "✦";
             position: absolute;
             left: 0;
-            color: #3b82f6;
+            top: 2px;
+            color: #10b981;
             font-weight: 700;
             font-size: 16px;
         }
@@ -271,6 +338,15 @@
                 margin: 0; border-radius: 0;
             }
             .header { background: #2563eb !important; }
+            .contact-item::before,
+            .section-title .icon,
+            .profile-text::before,
+            .timeline-item::after,
+            .company-name::before,
+            .school-name::before,
+            .date-range::before,
+            .skill-item::before,
+            .tasks-list li::before { display: none !important; }
         }
         @page { size: A4; margin: 0; }
     </style>
@@ -294,13 +370,13 @@
         <!-- CONTACT -->
         <div class="contact-section">
             {{#if personalInfo.phone}}
-            <div class="contact-item">{{personalInfo.phone}}</div>
+            <div class="contact-item contact-phone">{{personalInfo.phone}}</div>
             {{/if}}
             {{#if personalInfo.email}}
-            <div class="contact-item">{{personalInfo.email}}</div>
+            <div class="contact-item contact-email">{{personalInfo.email}}</div>
             {{/if}}
             {{#if personalInfo.location}}
-            <div class="contact-item">{{personalInfo.location}}</div>
+            <div class="contact-item contact-location">{{personalInfo.location}}</div>
             {{/if}}
         </div>
 
@@ -309,7 +385,7 @@
             <!-- PROFIL -->
             {{#if summary}}
             <div class="section">
-                <h2 class="section-title">Profil</h2>
+                <h2 class="section-title"><span class="icon">👤</span>Profil</h2>
                 <p class="profile-text">{{summary}}</p>
             </div>
             {{/if}}
@@ -317,7 +393,7 @@
             <!-- COMPÉTENCES -->
             {{#if skills.length}}
             <div class="section">
-                <h2 class="section-title">Compétences</h2>
+                <h2 class="section-title"><span class="icon">⚡</span>Compétences</h2>
                 <div class="skills-grid">
                     {{#each skills}}
                     <div class="skill-item">{{this}}</div>
@@ -329,7 +405,7 @@
             <!-- EXPÉRIENCE -->
             {{#if experience.length}}
             <div class="section">
-                <h2 class="section-title">Expérience Professionnelle</h2>
+                <h2 class="section-title"><span class="icon">💼</span>Expérience Professionnelle</h2>
                 <div class="timeline">
                     {{#each experience}}
                     <div class="timeline-item">
@@ -356,7 +432,7 @@
             <!-- FORMATION -->
             {{#if education.length}}
             <div class="section">
-                <h2 class="section-title">Formation</h2>
+                <h2 class="section-title"><span class="icon">🎓</span>Formation</h2>
                 <div class="timeline">
                     {{#each education}}
                     <div class="timeline-item">
@@ -376,7 +452,7 @@
             <!-- LANGUES -->
             {{#if languages.length}}
             <div class="section">
-                <h2 class="section-title">Langues</h2>
+                <h2 class="section-title"><span class="icon">🌐</span>Langues</h2>
                 <div class="skills-grid">
                     {{#each languages}}
                     <div class="language-item">{{this.language}} - {{this.level}}</div>
@@ -388,7 +464,7 @@
             <!-- INTÉRÊTS -->
             {{#if interests.length}}
             <div class="section">
-                <h2 class="section-title">Centre d'intérêt</h2>
+                <h2 class="section-title"><span class="icon">🎯</span>Centre d'intérêt</h2>
                 <div class="skills-grid">
                     {{#each interests}}
                     <div class="interest-item">{{this}}</div>
