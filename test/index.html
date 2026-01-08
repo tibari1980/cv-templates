@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Camille Dubois</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .header-section {
+            background-color: #1a365d;
+            color: white;
+            padding: 25px 40px;
+            position: relative;
+        }
+        
+        .name-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+        
+        .job-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .main-content {
+            display: flex;
+            padding: 0;
+        }
+        
+        .left-column {
+            flex: 3;
+            padding: 30px 40px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #eaeaea;
+        }
+        
+        .right-column {
+            flex: 2;
+            padding: 30px 40px;
+            background-color: white;
+        }
+        
+        .section-title {
+            color: #1a365d;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1a365d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .resume-text {
+            text-align: justify;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .skills-list {
+            list-style-type: none;
+        }
+        
+        .skills-list li {
+            padding: 6px 0;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .skills-list li:before {
+            content: "•";
+            color: #1a365d;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .experience-item {
+            margin-bottom: 25px;
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .job-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1a365d;
+        }
+        
+        .company-name {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .job-period {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .job-description {
+            margin-top: 8px;
+            font-size: 14px;
+            text-align: justify;
+        }
+        
+        .ia-ideas {
+            background-color: #e8f4fd;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 25px;
+        }
+        
+        .ia-title {
+            color: #1a365d;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .ia-list {
+            list-style-type: none;
+            margin-left: 10px;
+        }
+        
+        .ia-list li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .ia-list li:before {
+            content: "✓";
+            color: #1a365d;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .footer-section {
+            background-color: #1a365d;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        
+        .weather-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .left-column {
+                border-right: none;
+                border-bottom: 1px solid #eaeaea;
+            }
+            
+            .footer-section {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header-section, .left-column, .right-column {
+                padding: 20px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- En-tête du CV -->
+        <div class="header-section">
+            <h1 class="name-title">Camille Dubois</h1>
+            <div class="job-title">Analyste senior</div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Paris, N° 75001</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>camille.dubois@camille.fr</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>031-97191-88</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Colonne de gauche -->
+            <div class="left-column">
+                <div class="section-title">Résumé</div>
+                <p class="resume-text">
+                    Analyses toutes plus grâce à tous l'entreprise avec l'inclure de données, l'amélioration et l'expérience sont réservées. L'expérience est un méfice d'attention opérationnelle, de manière né associée à celle-ci qui démoule pour s'effectuer en les rendements.
+                </p>
+                
+                <div class="section-title">Compétences</div>
+                <ul class="skills-list">
+                    <li>Ouition du projet</li>
+                    <li>Série de direction finale sur les données</li>
+                    <li>VOL DE CHAT</li>
+                    <li>Analyse financière</li>
+                    <li>Outre d'intelligences commerciales</li>
+                    <li>Maintenance nettoyage</li>
+                </ul>
+                
+                <div class="ia-ideas">
+                    <div class="ia-title">Idées basées sur l'IA :</div>
+                    <ul class="ia-list">
+                        <li>Analyse des tendances du marché pour identifier les nouvelles opportunités de croissance.</li>
+                        <li>Réduction des coûts opérationnels de 15 % grâce à l'optimisation des processus.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Colonne de droite -->
+            <div class="right-column">
+                <div class="section-title">Expérience</div>
+                
+                <div class="experience-item">
+                    <div class="job-header">
+                        <div class="job-title">Analyste senior</div>
+                        <div class="job-period">2019 - Présent</div>
+                    </div>
+                    <div class="company-name">Légende de données à M.S.L., Paris, 75001</div>
+                    <p class="job-description">
+                        Analyse des données administratives auxquels de points pour les données commerciaux sont, notamment la tarifisation du financement et le financement pour améliorer les performances du marché fin de transport.
+                    </p>
+                    <p class="job-description">
+                        Résultation d'analyse de données opérationnelle et d'analyse de comportements de données dans les produits à standard remplaçant, ne doit pas être une augmentation de 15 % de la partie de marché en fonction de la mobilité prédateur pour prévenir les performances de données et de changements de chacun. Diversement, l'une doit être grande question dans la distribution budgétaire et l'utilisateur de nouveaux.
+                    </p>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="job-header">
+                        <div class="job-title">Analyste commercial</div>
+                        <div class="job-period">2016 - 2019</div>
+                    </div>
+                    <div class="company-name">Arrivée à l'équipage de M.S.L., Paris, 75001</div>
+                    <p class="job-description">
+                        Analyse économique de produits marchés de données pour identifier des activités internationales et internationale des technologies de garanties, ce qui a contribué aux relations de 25 % des soins.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pied de page -->
+        <div class="footer-section">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+            <div class="weather-info">
+                <i class="fas fa-cloud-sun"></i>
+                <span>-2°C | Temps dégagé</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
